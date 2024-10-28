@@ -1,0 +1,78 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Операционная Система{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/about.css' %}">
+<script src="{% static 'main/js/about.js' %}"></script>
+
+<div id="stars-container"></div>
+<div id="shooting-stars-container"></div>
+
+<div class="initial-content">
+    <i class="fa-solid fa-graduation-cap"></i>
+    <div class="initial-text">Узнай Про Нас Больше! Выбор За Тобой!</div>
+</div>
+
+<div class="about-buttons">
+    <button class="btn btn-green fade-in" onclick="showContent('#00cc00')" style="animation-delay: 0.5s;"><i class="fa-solid fa-circle-up"></i> Перспективное Будущее</button>
+    <button class="btn btn-blue fade-in" onclick="showContent('#3399ff')" style="animation-delay: 0.75s;"><i class="fa-solid fa-circle-info"></i> Дополнительная Информация</button>
+    <button class="btn btn-yellow fade-in" onclick="showContent('#ffcc00')" style="animation-delay: 1s;"><i class="fa-solid fa-gear"></i> Продолжение работы</button>
+</div>
+<div id="content-container" class="content-container" style="display: none;">
+
+</div>
+
+<script>
+    function showContent(color) {
+        const contentContainer = document.getElementById('content-container');
+        let iconClass = '';
+        let text = '';
+        let mainText = '';
+
+        switch (color) {
+            case '#00cc00':
+                iconClass = 'fa-solid fa-circle-up';
+                text = 'Перспективное Будущее';
+                mainText = 'Это операционная система, которая предлагает не только высочайшую производительность и стабильность, но также инновационные функции, которые делают ее непревзойденной в мире. Благодаря интеграции передовых технологий и разработке удобного интерфейса, Stellar обеспечивает оптимальный пользовательский опыт и удовлетворение потребностей даже самых требовательных пользователей. Эта операционная система спроектирована с учетом будущих технологических тенденций и требований мира, что делает ее идеальным выбором для тех, кто стремится быть впереди времени и использовать передовые возможности уже сегодня.';
+                break;
+            case '#3399ff':
+                iconClass = 'fa-solid fa-circle-info';
+                text = 'Дополнительная Информация';
+                mainText = 'Нашими основными принципами работы являются непрерывное совершенствование, прозрачность и внимание к потребностям наших пользователей. Мы стремимся к тому, чтобы каждый пользователь нашей операционной системы чувствовал себя уверенно и комфортно в цифровом мире, полагаясь на надежность и инновационные возможности, которые мы предоставляем. Если вам интересно узнать больше о нашей команде и наших ценностях, мы всегда открыты для общения и готовы поделиться дополнительной информацией о нашей работе и целях.';
+                break;
+            case '#ffcc00':
+                iconClass = 'fa-solid fa-gear';
+                text = 'Продолжение Работы';
+                mainText = 'Мы постоянно работаем над улучшением нашей операционной системы. В данный момент она очень сырая. Мы стремимся к тому, чтобы каждое обновление и каждый улучшенный аспект операционной системы Stellar приносили нашим пользователям ощутимую пользу и новые возможности. Мы признаем, что в данном этапе развития продукта могут возникать некоторые несовершенства, но наша команда готова к непрерывным усилиям в совершенствовании системы и исправлении всех обнаруженных проблем. Мы благодарим вас за терпение и поддержку в этом пути к совершенству.';
+                break;
+        }
+
+        contentContainer.innerHTML = `
+            <div class="content" style="border: 2px solid ${color}; width: 100%; height: 100%; top: -20%;">
+                <div class="text-container">
+                    <div class="text" style="color: ${color};">${text}</div>
+                    <div class="main-text">${mainText}</div>
+                </div>
+                <div class="icon"><i class="${iconClass}" style="color: ${color}; font-size: 460px;"></i></div>
+            </div>
+        `;
+
+        contentContainer.style.display = 'flex';
+        document.querySelector('.initial-content').style.display = 'none';
+
+        const contentElements = contentContainer.querySelectorAll('.text, .main-text, .icon');
+        contentElements.forEach((element, index) => {
+            element.style.opacity = 0;
+            element.style.transform = 'translateY(50px)';
+            setTimeout(() => {
+                element.style.transition = 'opacity 1s ease-in-out, transform 1s ease-in-out';
+                element.style.opacity = 1;
+                element.style.transform = 'translateY(0)';
+            }, index * 400);
+        });
+    }
+</script>
+{% endblock %}

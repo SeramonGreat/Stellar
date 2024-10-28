@@ -1,0 +1,93 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Техподдержка{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/support.css' %}">
+<script src="{% static 'main/js/support.js' %}"></script>
+
+<div id="stars-container"></div>
+<div id="shooting-stars-container"></div>
+
+<div class="content">
+    <h1>Мы с вами! Мы на связи!</h1>
+    <div class="container">
+        <div class="content-box" id="email-box">
+            <i class="fa-solid fa-envelope"></i>
+            <h2>Gmail.com</h2>
+            <p>stellarsupprotru001@gmail.com</p>
+            <a href="https://mail.google.com/mail/u/0/#search/in%3Asent+stellarsupprotru001%40gmail.com" class="btn" id="email-btn" target="_blank">
+                <i class="fa-solid fa-feather"></i> Написать
+            </a>
+        </div>
+        <div class="content-box" id="mail-box">
+            <i class="fa-solid fa-at"></i>
+            <h3>Mail.ru</h3>
+            <p1>stellarsupprotru001@mail.ru</p1>
+            <a href="https://e.mail.ru/inbox?utm_source=e.mail.ru&utm_medium=def_sign&utm_campaign=sent_via_mail&mt_click_id=mt-zzm979-1727613570-71648861" class="btn" id="mail-btn" target="_blank">
+                <i class="fa-solid fa-feather"></i> Написать
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="note">
+    <span class="note-title">Примечание:</span>
+    <span class="note-text" id="note-text">Если у вас возникли проблемы, пишите нам на почту!</span>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script>
+    const texts = [
+        "Пожалуйста, не засылайте нам писем, если мы не ответили вам! Мы обязательно ответим в итоге!",
+        "Будьте добры, пишите уместно и по делу, без всяких глупостей!",
+        "Если у вас есть предложения или вопросы, мы будем рады их услышать!",
+        "Для вашего удобства, вы можете писать на два адреса: gmail.com и mail.ru."
+    ];
+    let currentIndex = 0;
+
+    function changeText() {
+        const noteText = document.getElementById('note-text');
+        noteText.style.opacity = 0;
+        setTimeout(() => {
+            currentIndex = (currentIndex + 1) % texts.length;
+            noteText.textContent = texts[currentIndex];
+            noteText.style.opacity = 1;
+        }, 500);
+    }
+
+    setInterval(changeText, 5000);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const contentBoxes = document.querySelectorAll('.content-box');
+        const buttons = document.querySelectorAll('.content-box .btn');
+
+        contentBoxes.forEach((box, index) => {
+            box.addEventListener('mouseenter', function() {
+                buttons[index].style.borderColor = 'white';
+            });
+
+            box.addEventListener('mouseleave', function() {
+                if (index === 0) {
+                    buttons[index].style.borderColor = '#ff5024';
+                } else {
+                    buttons[index].style.borderColor = '#345cfe';
+                }
+            });
+        });
+
+        animateElements();
+    });
+
+    function animateElements() {
+        const elements = document.querySelectorAll('.content, .container, .content-box, .fa-envelope, .fa-at, h1, h2, h3, p, p1, .btn, .fa-feather, .note, .note-title, .note-text');
+        elements.forEach((el, index) => {
+            gsap.set(el, { y: 50, opacity: 0 });
+            gsap.to(el, { y: 0, opacity: 1, duration: 0.5, delay: index * 0.1, ease: "power2.out", onComplete: () => {
+                gsap.set(el, { clearProps: 'all' });
+            }});
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Социальные Сети{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/contacts.css' %}">
+<script src="{% static 'main/js/contacts.js' %}"></script>
+
+<div id="stars-container"></div>
+<div id="shooting-stars-container"></div>
+
+<div class="initial-content">
+    <i class="fa-solid fa-star"></i>
+    <div class="initial-text">Мы открыты! Мы в сети!</div>
+</div>
+
+<div class="about-buttons">
+    <button class="btn btn-red fade-in" onclick="showContent('#ff4242')" style="animation-delay: 0.5s;"><i class="fa-brands fa-youtube"></i> Ютуб</button>
+    <button class="btn btn-blue fade-in" onclick="showContent('#345cfe')" style="animation-delay: 0.75s;"><i class="fa-brands fa-vk"></i> ВКонтакте</button>
+    <button class="btn btn-cyan fade-in" onclick="showContent('#00ffee')" style="animation-delay: 1s;"><i class="fa-brands fa-telegram"></i> Телеграм</button>
+</div>
+<div id="content-container" class="content-container" style="display: none;">
+
+</div>
+
+<script src="{% static 'main/js/about.js' %}"></script>
+<script>
+    function showContent(color) {
+        const contentContainer = document.getElementById('content-container');
+        let iconClass = '';
+        let text = '';
+        let mainText = '';
+        let link = '';
+        let btnClass = '';
+
+        switch (color) {
+            case '#ff4242':
+                iconClass = 'fa-brands fa-youtube';
+                text = 'Ютуб';
+                mainText = 'Там мы будем публиковать видео, связанные с нашей операционной системой! Например, решение проблем, установка нашей операционной системы, сочетание клавиш и многое другое. Заглядывайте и подписывайтесь на наш канал! Будем рады вас видеть!';
+                link = 'https://www.youtube.com/@StellarOfficialChannel';
+                btnClass = 'btn-link-red';
+                break;
+            case '#345cfe':
+                iconClass = 'fa-brands fa-vk';
+                text = 'ВКонтакте';
+                mainText = 'Там мы будем предлагать более интересный контент – не только статьи и видео. Иногда мы будем выкладывать тестовые версии нашей операционной системы, проводить конкурсы, а также демонстрировать наш прогресс и узнавать ваше мнение! Вступайте будем рады вас!';
+                link = 'https://vk.com/welcometostellar';
+                btnClass = 'btn-link-blue';
+                break;
+            case '#00ffee':
+                iconClass = 'fa-brands fa-telegram';
+                text = 'Телеграм';
+                mainText = 'Если вас интересует процесс разработки, обновления, предложения идей, связь с нами или поиск важной информации о нас, то вы обязательно найдете все это в нашем канале в Telegram! Подписывайтесь!';
+                link = 'https://t.me/welcometostellar';
+                btnClass = 'btn-link-cyan';
+                break;
+        }
+
+        contentContainer.innerHTML = `
+            <div class="content" style="border: 2px solid ${color}; width: 100%; height: 100%; top: -20%;">
+                <div class="text-container">
+                    <div class="text" style="color: ${color};">${text}</div>
+                    <div class="main-text">${mainText}</div>
+                    <div class="button-container">
+                        <a href="${link}" target="_blank" class="btn btn-link ${btnClass}">Следить за работой!</a>
+                    </div>
+                </div>
+                <div class="icon"><i class="${iconClass}" style="color: ${color}; font-size: 460px;"></i></div>
+            </div>
+        `;
+
+        contentContainer.style.display = 'flex';
+        document.querySelector('.initial-content').style.display = 'none';
+
+        const contentElements = contentContainer.querySelectorAll('.text, .main-text, .icon, .btn-link');
+        contentElements.forEach((element, index) => {
+            element.style.opacity = 0;
+            element.style.transform = 'translateY(50px)';
+            setTimeout(() => {
+                element.style.transition = 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out';
+                element.style.opacity = 1;
+                element.style.transform = 'translateY(0)';
+            }, index * 200);
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Операционная Система{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/team.css' %}">
+<script src="{% static 'main/js/team.js' %}"></script>
+
+<div id="stars-container"></div>
+<div id="shooting-stars-container"></div>
+
+<div class="container">
+    <h1 class="bold-text">Вместе Мы Сила! Достанем Вершину!</h1>
+    <div class="content-wrapper">
+        <div class="left-block">
+            <img src="{% static 'main/image/SpaceMan1.jpg' %}" alt="Left Image" class="left-image">
+            <div class="left-content">
+                <h2 class="purple-header">SeramonGreat</h2>
+                <p>Разработчик Stellar и Создатель Сайта</p>
+            </div>
+        </div>
+        <div class="right-block">
+            <img src="{% static 'main/image/SpaceMan2.jpg' %}" alt="Right Image" class="right-image">
+            <div class="right-content">
+                <h2 class="purple-header">VDM55</h2>
+                <p>Основной Разработчик Stellar</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

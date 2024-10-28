@@ -1,0 +1,262 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stellar</title>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+    <link rel="icon" href="{% static 'main/image/StellarLogo.png' %}" type="image/png">
+
+    <style>
+        aside ul li {
+            position: relative;
+        }
+
+        aside ul li::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            top: 50%;
+            left: calc(100% + 10px);
+            transform: translateY(-50%);
+            background-color: #8B00FF;
+            color: #ffffff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            white-space: nowrap;
+            z-index: 1001;
+        }
+
+        aside ul li:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            aside {
+                position: absolute;
+                left: -100%;
+                transition: left 0.3s ease;
+            }
+
+            aside.visible {
+                left: 0;
+            }
+
+            main {
+                width: 100%;
+            }
+        }
+
+        .notification-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #8B00FF;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            font-size: 16px; /* Увеличенный размер текста */
+            z-index: 1002; /* Убедитесь, что она находится поверх других элементов */
+            transition: opacity 0.5s ease, visibility 0.5s ease; /* Плавная анимация */
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .notification-banner.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .notification-banner p {
+            margin: 5px 0;
+        }
+
+        .notification-banner .instruction {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Основное содержимое страницы -->
+    <div id="content">
+        <aside>
+            <div style="text-align: center;">
+                <img src="{% static 'main/image/LogoPower.png' %}" alt="Логотип сайта" class="logo-animation" style="width: 200%; margin-left: -50%; margin-top: -10px;">
+                <h3 style="margin-top: -10px; margin-left: -30%; font-size: 30px;"></h3>
+            </div>
+            <ul>
+                <a href="{% url 'Home' %}"><li data-tooltip="Главная Страница" class="button-animation"><i class="fa-solid fa-house fa-2x"></i></li></a>
+                <a href="{% url 'About' %}"><li data-tooltip="Операционная Система" class="button-animation"><i class="fa-solid fa-laptop-code fa-2x"></i></li></a>
+                <a href="{% url 'Installation' %}"><li data-tooltip="Установка" class="button-animation"><i class="fa-solid fa-download fa-2x"></i></li></a>
+                <a href="{% url 'Settings' %}"><li data-tooltip="Настройки" class="button-animation"><i class="fa-solid fa-gear fa-2x"></i></li></a>
+                <a href="{% url 'Contacts' %}"><li data-tooltip="Контакты" class="button-animation"><i class="fa-solid fa-paper-plane fa-2x"></i></li></a>
+                <a href="{% url 'Support' %}"><li data-tooltip="Техподдержка" class="button-animation"><i class="fa-solid fa-headset fa-2x"></i></li></a>
+                <a href="{% url 'News' %}"><li data-tooltip="Новости" class="button-animation"><i class="fa-solid fa-newspaper fa-2x"></i></li></a>
+                <a href="{% url 'Team' %}"><li data-tooltip="Команда" class="button-animation"><i class="fa-solid fa-people-group fa-2x"></i></li></a>
+            </ul>
+        </aside>
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <div id="notification-banner" class="notification-banner">
+        <p id="notification-text">Если объекты не корректно отображаются, зайдите в настройки браузера и измените масштаб с 100% на <span id="recommended-scale">150%</span>. Приносим свои извинения! Команда Stellar!</p>
+        <p class="instruction">Как изменить масштаб: Настройки -> Масштаб</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bounce.js/0.8.2/bounce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+    <script src="{% static 'main/js/custom.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.querySelector('.logo-animation');
+            const buttons = document.querySelectorAll('.button-animation');
+
+            gsap.from(logo, {
+                opacity: 0,
+                x: -100,
+                duration: 1.5,
+                ease: "power2.out"
+            });
+
+            buttons.forEach((button, index) => {
+                gsap.from(button, {
+                    opacity: 0,
+                    x: -100,
+                    duration: 1.5,
+                    ease: "power2.out",
+                    delay: index * 0.3
+                });
+
+                button.addEventListener('mouseenter', () => {
+                    gsap.to(button, {
+                        scale: 1.1,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                });
+
+                button.addEventListener('mouseleave', () => {
+                    gsap.to(button, {
+                        scale: 1,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                });
+            });
+
+            const notificationBanner = document.getElementById('notification-banner');
+            const notificationText = document.getElementById('notification-text');
+            const recommendedScale = document.getElementById('recommended-scale');
+
+            function checkDisplayScale() {
+                const scale = window.devicePixelRatio || 1;
+                let recommendedScaleValue = '150%';
+                let notificationMessage = '';
+
+                if (scale === 1.25) {
+                    recommendedScaleValue = '125%';
+                    notificationMessage = 'Если объекты не корректно отображаются, зайдите в настройки браузера и измените масштаб с 100% на 125%. Приносим свои извинения! Команда Stellar!';
+                } else if (scale === 1.75) {
+                    recommendedScaleValue = '80%';
+                    notificationMessage = 'Если объекты не корректно отображаются, зайдите в настройки браузера и измените масштаб с 100% на 80%. Приносим свои извинения! Команда Stellar!';
+                } else if (scale === 1) {
+                    recommendedScaleValue = '100%';
+                    notificationMessage = 'Если объекты не корректно отображаются, зайдите в настройки браузера и измените масштаб с 100% на 150%. Приносим свои извинения! Команда Stellar!';
+                }
+
+                recommendedScale.textContent = recommendedScaleValue;
+                notificationText.textContent = notificationMessage;
+
+                if (scale === 1 || scale === 1.25 || scale === 1.75) {
+                    notificationBanner.classList.add('visible');
+                } else {
+                    notificationBanner.classList.remove('visible');
+                }
+            }
+
+            checkDisplayScale();
+            window.addEventListener('resize', checkDisplayScale);
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'F11') {
+                event.preventDefault();
+            }
+        });
+
+        function setFavicon() {
+            const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const favicon = document.querySelector('link[rel="icon"]');
+
+            if (isDarkMode) {
+                favicon.href = "{% static 'main/image/StellarLogo.png' %}";
+            } else {
+                favicon.href = "{% static 'main/image/StellarLogo2.png' %}";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', setFavicon);
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        function redirectToDesktopVersion() {
+            if (isMobileDevice()) {
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                const isMobileSafari = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+
+                if (isMobileSafari) {
+                    alert("Пожалуйста, переключитесь на 'Версия для ПК' в настройках Safari.");
+                } else {
+                    alert("Пожалуйста, переключитесь на 'Версия для ПК' в настройках браузера.");
+                }
+                window.location.href = "about:blank";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', redirectToDesktopVersion);
+
+        const aside = document.querySelector('aside');
+        const main = document.querySelector('main');
+
+        function handleResize() {
+            if (window.innerWidth <= 768) {
+                aside.classList.remove('visible');
+            } else {
+                aside.classList.add('visible');
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        document.addEventListener('mousemove', function(event) {
+            if (window.innerWidth <= 768 && event.clientX < 50) {
+                aside.classList.add('visible');
+            } else if (window.innerWidth <= 768) {
+                aside.classList.remove('visible');
+            }
+        });
+    </script>
+</body>
+</html>

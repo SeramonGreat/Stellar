@@ -1,0 +1,37 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Главная Страница{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'main/css/index.css' %}">
+<script src="{% static 'main/js/index.js' %}"></script>
+
+<div id="stars-container"></div>
+<div id="shooting-stars-container"></div>
+
+<div class="row">
+    <div class="col-md-6 text-container">
+        <h1 class="fade-in" style="animation-delay: 0.5s;">Добро пожаловать в Stellar!</h1>
+        <p class="fade-in" style="animation-delay: 1s;">Мы рады видеть вас на нашем официальном сайте операционной системы Stellar.
+        Здесь вы можете установить нашу операционную систему на ядре Stellar Aurora System,
+        следить за новостями, обращаться за помощью и узнавать информацию о нашем продукте.
+        Мы также не исключаем, что вы сначала захотите узнать, что такое операционная система Stellar.
+        Внизу мы сделали кнопку, которая переместит вас на страницу изучения нашей системы,
+        или вы можете самостоятельно изучить все наши разделы!
+        Мы желаем вам новых впечатлений и возможностей с нашей операционной системой!
+        Желаем удачи, первооткрыватель!</p>
+        <div class="button-container">
+            <a href="/about" class="btn-wrapper" id="explore-button">
+                <span class="btn btn-warning">Изучить Cистему!</span>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-6 image-container">
+        <i class="fa-solid fa-user-astronaut fade-in-astronaut" style="animation-delay: 2s;"></i>
+    </div>
+</div>
+
+{% endblock %}

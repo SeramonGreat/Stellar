@@ -1,0 +1,118 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Новости{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/news.css' %}">
+<script src="{% static 'main/js/news.js' %}"></script>
+
+<div id="stars-container"></div>
+<div id="shooting-stars-container"></div>
+
+<div class="news-container">
+    <h1>Новости</h1>
+    {% if news %}
+        {% for el in news %}
+            <a href="#" class="alert-link" data-id="{{ el.id }}">
+                <div class="alert {% if el.type == 'problem' %}alert-problem{% else %}alert-update{% endif %}">
+                    <h3>{{ el.title }}</h3>
+                    <p>{{ el.anons }}</p>
+                    <p>Дата и время: {{ el.date }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    {% else %}
+        <p>Где Новости? Куда они пропали!?</p>
+    {% endif %}
+</div>
+
+<div class="content-container">
+    <div id="news-content">
+        <i class="fa-brands fa-readme fa-10x"></i>
+        <p1>Выберите Новость! Для Просмотра!</p1>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const newsLinks = document.querySelectorAll('.alert-link');
+    const newsContentContainer = document.querySelector('.content-container');
+    const newsContent = document.getElementById('news-content');
+
+    function animateElements() {
+        const elements = document.querySelectorAll('.news-container > *');
+        gsap.set(elements, { opacity: 0, y: 20 });
+        elements.forEach((element, index) => {
+            gsap.to(element, { opacity: 1, y: 0, duration: 0.8, delay: index * 0.2, ease: "power3.out" });
+        });
+
+        gsap.set(newsContentContainer, { opacity: 0, x: 20 });
+        gsap.to(newsContentContainer, { opacity: 1, x: 0, duration: 0.8, delay: elements.length * 0.2, ease: "power3.out" });
+    }
+
+    animateElements();
+
+    newsLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const newsId = this.getAttribute('data-id');
+            const newsType = this.querySelector('.alert').classList.contains('alert-problem') ? 'alert-problem' : 'alert-update';
+
+            fetch(`/get_news/${newsId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    newsContent.innerHTML = `
+                        <div class="alert ${newsType}">
+                            <h3>${data.title}</h3>
+                            <p>${data.content}</p>
+                            ${data.image ? `<img src="${data.image}" alt="${data.title}" class="news-image">` : ''}
+                        </div>
+                    `;
+
+                    const alertElement = newsContent.querySelector('.alert');
+                    const titleElement = alertElement.querySelector('h3');
+                    const contentElement = alertElement.querySelector('p');
+                    const imageElement = alertElement.querySelector('img');
+
+                    if (newsType === 'alert-problem') {
+                        titleElement.style.color = '#FF5733';
+                    } else if (newsType === 'alert-update') {
+                        titleElement.style.color = '#3DFF33';
+                    }
+
+                    gsap.from(titleElement, { opacity: 0, y: 20, duration: 0.8, delay: 0.2, ease: "power3.out" });
+                    gsap.from(contentElement, { opacity: 0, y: 20, duration: 0.8, delay: 0.4, ease: "power3.out" });
+                    if (imageElement) {
+                        gsap.from(imageElement, { opacity: 0, y: 20, duration: 0.8, delay: 0.6, ease: "power3.out" });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    newsContent.innerHTML = '<p>Ошибка при загрузке новости.</p>';
+                });
+        });
+    });
+
+    newsContentContainer.addEventListener('mouseover', function() {
+        const titleElement = newsContent.querySelector('h3');
+        if (titleElement) {
+            titleElement.style.color = 'white';
+        }
+    });
+
+    newsContentContainer.addEventListener('mouseout', function() {
+        const alertElement = newsContent.querySelector('.alert');
+        const titleElement = alertElement.querySelector('h3');
+        if (alertElement.classList.contains('alert-problem')) {
+            titleElement.style.color = '#FF5733';
+        } else if (alertElement.classList.contains('alert-update')) {
+            titleElement.style.color = '#3DFF33';
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Установка Операционной Системы{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/installation.css' %}">
+<script src="{% static 'main/js/installation.js' %}"></script>
+
+<div id="stars-container"></div>
+<div id="shooting-stars-container"></div>
+
+<div class="installation-container">
+    <div class="text-box left-box">
+        <h2 class="fade-in-up">Установка</h2>
+        <p class="fade-in-up">На этой странице установки нашей операционной системы Stellar. Прежде всего, мы должны предупредить вас, что наша система все еще находится в стадии разработки и может содержать много недоработок. Система может работать неправильно, но если вы уже приняли решение, то мы рады вашей смелости. В случае любой поломки обращайтесь в техподдержку, и мы постараемся всеми силами помочь. Желаем успешной установки! Первооткрыватель!</p>
+        <div class="icon-container">
+            <i class="fa-solid fa-laptop main-icon fade-in-up"></i>
+            <img src="{% static 'main/image/LogoPower.png' %}" alt="Custom Image" class="custom-image fade-in-up">
+        </div>
+    </div>
+    <button id="download-button" class="install-button fade-in">
+        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+    </button>
+    <div class="text-box right-box">
+        <h2 class="fade-in-up">Обновления</h2>
+        <p class="fade-in-up">Мы рады сообщить, что у нас есть функция обновление нашей операционной системы Stellar. Скоро эти обновления будут включать в себя исправления и улучшения, чтобы сделать систему еще более надежной и удобной в использовании. Надеемся, что вы оцените все нововведения. В случае возникновения проблем, не стесняйтесь обращаться в нашу службу поддержки. Спасибо за ваше внимание и пользование нашей системой! Первооткрыватель!</p>
+        <div class="icon-container">
+            <i class="fa-solid fa-laptop main-icon fade-in-up"></i>
+            <i class="fa-solid fa-gears sub-icon sub-icon-1 fade-in-up"></i>
+            <i class="fa-solid fa-plus sub-icon sub-icon-2 fade-in-up"></i>
+        </div>
+    </div>
+</div>
+<div id="confetti-container"></div>
+
+<script>
+document.getElementById('download-button').addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.href = '{% static 'main/files/StellarOS.exe' %}';
+    link.download = 'StellarOS.exe';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    const confettiContainer = document.getElementById('confetti-container');
+    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+
+    for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.top = `${Math.random() * -50}vh`;
+        confetti.style.width = `${Math.random() * 10 + 5}px`;
+        confetti.style.height = `${Math.random() * 10 + 5}px`;
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        confetti.style.animationDuration = `${Math.random() * 2 + 1}s`;
+        confettiContainer.appendChild(confetti);
+
+        setTimeout(() => {
+            confetti.remove();
+        }, 3000);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const elements = document.querySelectorAll('.fade-in-up, .fade-in');
+    elements.forEach((element, index) => {
+        element.style.animationDelay = `${index * 0.2}s`;
+    });
+});
+</script>
+{% endblock %}

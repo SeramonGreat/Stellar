@@ -1,0 +1,126 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Настройки{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/settings.css' %}">
+<script src="{% static 'main/js/settings.js' %}"></script>
+
+<div id="stars-container"></div>
+<div id="shooting-stars-container"></div>
+
+<div class="initial-content animate__animated">
+    <div class="image-container animate__animated">
+        <i class="fa-regular fa-eye"></i>
+    </div>
+    <div class="text-container animate__animated">
+        <p>Хотите Увидеть Сначала? Конечно Все Для Вас!</p>
+    </div>
+</div>
+<div class="button-container">
+    <button id="left-button" class="button green-button animate__animated"><i class="fa-solid fa-download"></i></button>
+    <button id="right-button" class="button red-button animate__animated"><i class="fa-solid fa-screwdriver-wrench"></i></button>
+</div>
+<div id="left-content" class="content" style="display: none;">
+    <div class="text bold-text animate__animated">
+        <p><span class="green-text">Установка</span> Операционной Системы</p>
+    </div>
+    <div class="video animate__animated">
+        <video width="900" height="506" controls>
+            <source src="{% static 'main/videos/VideoInstall.mp4' %}" type="video/mp4">
+        </video>
+    </div>
+</div>
+<div id="right-content" class="content" style="display: none;">
+    <div class="text bold-text animate__animated">
+        <p><span class="red-text">Настройки</span> Операционной Системы</p>
+    </div>
+    <div class="video animate__animated">
+        <video width="900" height="506" controls>
+            <source src="{% static 'main/videos/VideoOS.mp4' %}" type="video/mp4">
+        </video>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        animateInitialContent();
+    });
+
+    document.getElementById('left-button').addEventListener('click', function() {
+        document.getElementById('left-content').style.display = 'block';
+        document.getElementById('right-content').style.display = 'none';
+        document.querySelector('.initial-content').style.display = 'none';
+        animateContent('left-content');
+    });
+
+    document.getElementById('right-button').addEventListener('click', function() {
+        document.getElementById('right-content').style.display = 'block';
+        document.getElementById('left-content').style.display = 'none';
+        document.querySelector('.initial-content').style.display = 'none';
+        animateContent('right-content');
+    });
+
+    let initialContentAnimated = false;
+
+    function animateInitialContent() {
+        if (initialContentAnimated) return;
+        const initialContent = document.querySelector('.initial-content');
+        const imageContainer = initialContent.querySelector('.image-container');
+        const textContainer = initialContent.querySelector('.text-container');
+        const leftButton = document.getElementById('left-button');
+        const rightButton = document.getElementById('right-button');
+
+        imageContainer.style.opacity = 0;
+        textContainer.style.opacity = 0;
+        leftButton.style.opacity = 0;
+        rightButton.style.opacity = 0;
+
+        setTimeout(() => {
+            imageContainer.classList.add('animate__fadeInDown');
+            imageContainer.style.opacity = 1;
+        }, 300);
+
+        setTimeout(() => {
+            textContainer.classList.add('animate__fadeInUp');
+            textContainer.style.opacity = 1;
+        }, 600);
+
+        setTimeout(() => {
+            leftButton.classList.add('animate__fadeInLeft');
+            leftButton.style.opacity = 1;
+        }, 900);
+
+        setTimeout(() => {
+            rightButton.classList.add('animate__fadeInRight');
+            rightButton.style.opacity = 1;
+        }, 1200);
+
+        initialContentAnimated = true;
+    }
+
+    function animateContent(contentId) {
+        const content = document.getElementById(contentId);
+        const title = content.querySelector('.text.bold-text');
+        const video = content.querySelector('.video');
+
+        if (!title.classList.contains('animate__fadeInDown')) {
+            title.style.opacity = 0;
+            setTimeout(() => {
+                title.classList.add('animate__fadeInDown');
+                title.style.opacity = 1;
+            }, 300);
+        }
+
+        if (!video.classList.contains('animate__fadeInUp')) {
+            video.style.opacity = 0;
+            setTimeout(() => {
+                video.classList.add('animate__fadeInUp');
+                video.style.opacity = 1;
+            }, 600);
+        }
+    }
+</script>
+{% endblock %}
