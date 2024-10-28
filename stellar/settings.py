@@ -10,7 +10,7 @@ SECRET_KEY = 'django-insecure-+$9vq^_ezk^d^tb5(s9&h%yg4_m@$0axfb1*1_=3@%f43z&4n2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['stellar-rtk5.onrender.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -98,6 +98,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
