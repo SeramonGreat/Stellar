@@ -37,13 +37,6 @@
 
 <script>
 document.getElementById('download-button').addEventListener('click', () => {
-    const link = document.createElement('a');
-    link.href = '{% static 'main/files/StellarOS.exe' %}';
-    link.download = 'StellarOS.exe';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
     const confettiContainer = document.getElementById('confetti-container');
     const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
 
@@ -63,6 +56,10 @@ document.getElementById('download-button').addEventListener('click', () => {
             confetti.remove();
         }, 3000);
     }
+
+    setTimeout(() => {
+        window.open('https://vk.com/welcometostellar', '_blank');
+    }, 3000);
 });
 
 document.addEventListener('DOMContentLoaded', () => {
