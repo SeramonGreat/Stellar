@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import Article
 
 def index(request):
@@ -38,3 +38,57 @@ def get_news_detail(request, news_id):
         'image': news.image.url if news.image else None,
     }
     return JsonResponse(data)
+
+def sitemap_view(request):
+    sitemap_content = """<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      <url>
+        <loc>https://stellar-rtk5.onrender.com/</loc>
+        <lastmod>2024-10-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>1.0</priority>
+      </url>
+      <url>
+        <loc>https://stellar-rtk5.onrender.com/about</loc>
+        <lastmod>2024-10-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+      </url>
+      <url>
+        <loc>https://stellar-rtk5.onrender.com/contacts</loc>
+        <lastmod>2024-10-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+      </url>
+      <url>
+        <loc>https://stellar-rtk5.onrender.com/installation</loc>
+        <lastmod>2024-10-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+      </url>
+      <url>
+        <loc>https://stellar-rtk5.onrender.com/news</loc>
+        <lastmod>2024-10-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+      </url>
+      <url>
+        <loc>https://stellar-rtk5.onrender.com/settings</loc>
+        <lastmod>2024-10-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+      </url>
+      <url>
+        <loc>https://stellar-rtk5.onrender.com/support</loc>
+        <lastmod>2024-10-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+      </url>
+      <url>
+        <loc>https://stellar-rtk5.onrender.com/team</loc>
+        <lastmod>2024-10-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+      </url>
+    </urlset>"""
+    return HttpResponse(sitemap_content, content_type="application/xml")

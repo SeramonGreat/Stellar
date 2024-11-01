@@ -12,6 +12,7 @@ urlpatterns = [
     path('settings', views.settings, name='Settings'),
     path('support', views.support, name='Support'),
     path('team', views.team, name='Team'),
+    path('sitemap.xml', views.sitemap_view, name='Sitemap'),
     path('get_news/<int:news_id>/', views.get_news_detail, name='get_news_detail'),
 ]
 
