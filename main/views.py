@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from .models import Article
 
@@ -26,6 +26,9 @@ def settings(request):
 
 def support(request):
     return render(request, 'main/support.html')
+
+def custom_404_view(request, exception):
+    return redirect('Home')
 
 def get_news_detail(request, news_id):
     news = get_object_or_404(Article, id=news_id)

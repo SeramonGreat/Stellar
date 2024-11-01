@@ -6,8 +6,10 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Stellar</title>
-    <title>{% block title %}{% endblock %}</title>
+    <title>Stellar - Технологи Новых Возможностей!</title>
+    <meta name="description" content="Stellar - это новая операционная система, разработанная для повышения производительности и удобства использования, мы предлагаем новые возможности для вас!.">
+    <meta name="keywords" content="Stellar, операционная система, производительность, удобство использования, новости, установка, настройки">
+    <link rel="canonical" href="https://stellar-rtk5.onrender.com/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.2/css/all.css">
@@ -220,35 +222,17 @@
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
 
-        function redirectToDesktopVersion() {
-            if (isMobileDevice()) {
-                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                const isMobileSafari = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-
-                if (isMobileSafari) {
-                    alert("Пожалуйста, переключитесь на 'Версия для ПК' в настройках Safari.");
-                } else {
-                    alert("Пожалуйста, переключитесь на 'Версия для ПК' в настройках браузера.");
-                }
-                window.location.href = "about:blank";
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', redirectToDesktopVersion);
-
-        const aside = document.querySelector('aside');
-        const main = document.querySelector('main');
-
         function handleResize() {
-            if (window.innerWidth <= 768) {
-                aside.classList.remove('visible');
-            } else {
-                aside.classList.add('visible');
+            if (isMobileDevice()) {
+                alert("Сайт не предназначен для телефонов и тд, за это приносим свои извинения, если сайт покажется странным. Команда Stellar!");
             }
         }
 
         window.addEventListener('resize', handleResize);
         handleResize();
+
+        const aside = document.querySelector('aside');
+        const main = document.querySelector('main');
 
         document.addEventListener('mousemove', function(event) {
             if (window.innerWidth <= 768 && event.clientX < 50) {

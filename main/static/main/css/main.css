@@ -74,9 +74,9 @@ aside ul li:hover i {
     color: #ffffff;
     text-align: center;
     padding: 10px;
-    font-size: 16px; /* Увеличенный размер текста */
-    z-index: 1002; /* Убедитесь, что она находится поверх других элементов */
-    transition: opacity 0.5s ease, visibility 0.5s ease; /* Плавная анимация */
+    font-size: 16px;
+    z-index: 1002;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
     opacity: 0;
     visibility: hidden;
 }

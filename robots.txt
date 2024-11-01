@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://stellar-rtk5.onrender.com/sitemap.xml
