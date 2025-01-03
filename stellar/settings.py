@@ -12,6 +12,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['stellar-rtk5.onrender.com', '127.0.0.1', 'localhost']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://stellar-rtk5.onrender.com',
+]
 
 # Application definition
 
