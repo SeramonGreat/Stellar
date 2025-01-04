@@ -1,0 +1,49 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Главная Страница{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mobile Home</title>
+    <link rel="stylesheet" href="{% static 'main/css/mobile.css' %}">
+</head>
+<body>
+    <div id="stars-container"></div>
+    <div id="shooting-stars-container"></div>
+    <div class="overlay"></div>
+
+    <!-- Текст вместо "Привет, мир!" -->
+    <div id="typing-text-container">
+        <span id="typing-text"></span>
+    </div>
+
+    <!-- Блок для сообщений -->
+    <div id="chat-container">
+        <div id="chat-header">Система Разработчика</div> <!-- Заголовок -->
+        <div id="chat-content"></div>
+    </div>
+
+    <!-- Монитор с черным экраном -->
+    <div class="monitor-container">
+        <div class="monitor">
+            <div class="screen">
+                <div id="code-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'main/js/mobile.js' %}"></script>
+</body>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    aside {
+        display: none;
+    }
+</style>
+{% endblock %}

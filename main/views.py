@@ -3,6 +3,8 @@ from django.http import JsonResponse, HttpResponse
 from .models import Article
 
 def index(request):
+    if request.user_agent.is_mobile:
+        return render(request, 'main/mobile.html')
     return render(request, 'main/index.html')
 
 def about(request):
@@ -92,3 +94,19 @@ def sitemap_view(request):
       </url>
     </urlset>"""
     return HttpResponse(sitemap_content, content_type="application/xml")
+
+# Новые функции для мобильных страниц
+def mobile_support(request):
+    if request.user_agent.is_mobile:
+        return render(request, 'main/mobile_support.html')
+    return redirect('Support')
+
+def mobile_contacts(request):
+    if request.user_agent.is_mobile:
+        return render(request, 'main/mobile_contacts.html')
+    return redirect('Contacts')
+
+def mobile_project(request):
+    if request.user_agent.is_mobile:
+        return render(request, 'main/mobile_project.html')
+    return redirect('About')

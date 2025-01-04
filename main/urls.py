@@ -14,6 +14,9 @@ urlpatterns = [
     path('team', views.team, name='Team'),
     path('sitemap.xml', views.sitemap_view, name='Sitemap'),
     path('get_news/<int:news_id>/', views.get_news_detail, name='get_news_detail'),
+    path('mobile/support', views.mobile_support, name='MobileSupport'),
+    path('mobile/contacts', views.mobile_contacts, name='MobileContacts'),
+    path('mobile/project', views.mobile_project, name='MobileProject'),
 ]
 
 if settings.DEBUG:

@@ -10,14 +10,18 @@ SECRET_KEY = 'django-insecure-+$9vq^_ezk^d^tb5(s9&h%yg4_m@$0axfb1*1_=3@%f43z&4n2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['stellar-rtk5.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['stellar-rtk5.onrender.com', '127.0.0.1', 'localhost', '192.168.88.24']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://stellar-rtk5.onrender.com',
+]
 
 # Application definition
 
 INSTALLED_APPS = [
     'main',
     'django.contrib.admin',
+    'django_user_agents',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -30,6 +34,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

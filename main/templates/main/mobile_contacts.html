@@ -1,0 +1,26 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Поддержка{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mobile Support</title>
+    <link rel="stylesheet" href="{% static 'main/css/mobile.css' %}">
+</head>
+<body>
+    <h1>Страница поддержки (мобильная версия)</h1>
+    <p>Здесь вы можете найти информацию о поддержке.</p>
+</body>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    aside {
+        display: none;
+    }
+</style>
+{% endblock %}

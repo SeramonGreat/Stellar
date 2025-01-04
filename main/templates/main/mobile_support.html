@@ -1,0 +1,67 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}Техподдержка{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Техподдержка</title>
+    <link rel="stylesheet" href="{% static 'main/css/mobile_support.css' %}">
+</head>
+<body>
+    <!-- Звездный фон -->
+    <div id="stars-container"></div>
+    <div id="shooting-stars-container"></div>
+
+    <!-- Заголовок -->
+    <div class="header-text neon fadeInUp">Техподдержка</div>
+
+    <!-- Блоки контента -->
+    <div class="content-blocks-container">
+        <div class="content-block info fadeInUp" style="animation-delay: 0.2s;">
+            <div class="icon"><i class="fa-solid fa-circle-info"></i></div>
+            <div class="text">
+                <p>Смело копируйте и связывайтесь с нами, если у вас возникнут вопросы или проблема!</p>
+            </div>
+        </div>
+
+        <div class="content-block blue fadeInUp" style="animation-delay: 0.4s;">
+            <div class="icon"><i class="fa-solid fa-at"></i></div>
+            <div class="text">
+                <p class="email">Почта Для Mail.ru</p>
+                <p class="small-email" id="email1">Копируй и обращайся!</p>
+                <button class="copy-button" data-email="email1">
+                    Копировать <i class="fa-solid fa-copy"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="content-block orange fadeInUp" style="animation-delay: 0.6s;">
+            <div class="icon"><i class="fa-solid fa-envelope"></i></div>
+            <div class="text">
+                <p class="email">Почта Для Gmail.co</p>
+                <p class="small-email" id="email2">Копируй и обращайся!</p>
+                <button class="copy-button" data-email="email2">
+                    Копировать <i class="fa-solid fa-copy"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключаем минифицированный JavaScript через CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+    <script src="{% static 'main/js/mobile_support.js' %}"></script>
+</body>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    aside {
+        display: none;
+    }
+</style>
+{% endblock %}

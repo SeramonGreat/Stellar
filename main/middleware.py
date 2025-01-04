@@ -7,6 +7,6 @@ class Custom404Middleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        if response.status_code == 404:
+        if response.status_code == 404 and not request.path.startswith('/admin/'):
             return redirect('Home')
         return response
