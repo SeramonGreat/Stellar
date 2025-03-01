@@ -54,18 +54,18 @@ html, body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Прозрачный фон */
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
 
 /* Анимация печати для текста */
 #typing-text-container {
     position: absolute;
-    top: 10%;
-    left: 50%;
+    top: 11%;
+    left: 51%;
     transform: translate(-50%, -50%);
     color: #0f0;
-    font-size: 24px;
+    font-size: 32px;
     white-space: nowrap;
     overflow: hidden;
     z-index: 2;
@@ -75,6 +75,49 @@ html, body {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
+}
+
+/* Анимация для курсора заголовка */
+#typing-text.cursor::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: #0f0;
+    animation: blinkCursor 0.75s steps(2) infinite, fadeOutCursor 1s 1s forwards;
+}
+
+@keyframes blinkCursor {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes fadeOutCursor {
+    to { opacity: 0; }
+}
+
+/* Стили для кнопки "Пропустить" */
+#skip-button {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #0f0;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Anonymous Pro', monospace;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    z-index: 5;
+    display: none; /* Скрываем кнопку по умолчанию */
+}
+
+#skip-button:hover {
+    opacity: 1;
 }
 
 /* Блок для сообщений */
@@ -107,10 +150,10 @@ html, body {
 
 #chat-content {
     padding: 10px;
-    height: calc(100% - 40px); /* Учитываем высоту заголовка */
+    height: calc(100% - 40px);
     overflow-y: auto;
-    scrollbar-width: none; /* Скрыть скроллбар для Firefox */
-    -ms-overflow-style: none; /* Скрыть скроллбар для IE и Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 #chat-content::-webkit-scrollbar {
@@ -126,23 +169,19 @@ html, body {
     font-weight: bold;
 }
 
-/* Анимация печати для сообщений */
 .message .text {
     white-space: pre-wrap;
     overflow: hidden;
-    border-right: 2px solid #0f0;
-    animation: typewriter 4s steps(44) 1s 1 normal both,
-               blinkTextCursor 500ms steps(44) 4s 1 normal both;
+    display: inline-block;
 }
 
-@keyframes typewriter {
-    from { width: 0; }
-    to { width: 100%; }
-}
-
-@keyframes blinkTextCursor {
-    from { border-right-color: #0f0; }
-    to { border-right-color: transparent; }
+/* Курсор для текста */
+.message .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: #0f0;
+    animation: blinkCursor 1s ease-in-out infinite;
 }
 
 /* Монитор с черным экраном */
@@ -185,7 +224,67 @@ html, body {
     color: #0f0;
     font-size: 14px;
     white-space: pre-wrap;
-    overflow-y: scroll;
+    overflow: hidden;
     padding: 10px;
     box-sizing: border-box;
+}
+
+/* Стили для падающих символов */
+.matrix-column {
+    position: absolute;
+    top: -100%;
+    width: 20px;
+    font-size: 18px;
+    color: #0f0;
+    text-align: center;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    opacity: 0.8;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+.matrix-column span {
+    opacity: 0;
+    animation: fadeInOut 1s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Стили для кнопок */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-wrapper {
+    text-decoration: none;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #0f0;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Anonymous Pro', monospace;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.btn:hover {
+    opacity: 1;
 }

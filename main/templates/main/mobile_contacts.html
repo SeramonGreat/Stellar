@@ -2,18 +2,57 @@
 
 {% load static %}
 
-{% block title %}Поддержка{% endblock %}
+{% block title %}Контакты{% endblock %}
 
 {% block content %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Mobile Support</title>
-    <link rel="stylesheet" href="{% static 'main/css/mobile.css' %}">
+    <title>Контакты</title>
+    <link rel="stylesheet" href="{% static 'main/css/mobile_contacts.css' %}">
 </head>
 <body>
-    <h1>Страница поддержки (мобильная версия)</h1>
-    <p>Здесь вы можете найти информацию о поддержке.</p>
+    <!-- Звездный фон -->
+    <div id="stars-container"></div>
+    <div id="shooting-stars-container"></div>
+
+    <!-- Заголовок -->
+    <div class="header-text neon fadeInUp">Контакты</div>
+
+    <!-- Блоки контента -->
+    <div class="content-blocks-container">
+        <!-- Первый блок (Ютуб) -->
+        <div class="content-block red fadeInUp" style="animation-delay: 0.2s;">
+            <div class="icon"><i class="fa-brands fa-youtube"></i></div>
+            <div class="text">
+                <p>Ютуб Канал</p>
+                <a href="https://www.youtube.com/@StellarOfficialChannel" target="_blank" class="copy-button">Перейти</a>
+            </div>
+        </div>
+
+        <!-- Второй блок (VK) -->
+        <div class="content-block blue fadeInUp" style="animation-delay: 0.4s;">
+            <div class="icon"><i class="fa-brands fa-vk"></i></div>
+            <div class="text">
+                <p>VK Сообщество</p>
+                <a href="https://vk.com/welcometostellar" target="_blank" class="copy-button">Перейти</a>
+            </div>
+        </div>
+
+        <!-- Третий блок (Телеграм) -->
+        <div class="content-block teal fadeInUp" style="animation-delay: 0.6s;">
+            <div class="icon"><i class="fa-brands fa-telegram"></i></div>
+            <div class="text">
+                <p>Телеграмм Канал</p>
+                <a href="https://t.me/welcometostellar" target="_blank" class="copy-button">Перейти</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключаем минифицированный JavaScript через CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+    <script src="{% static 'main/js/mobile_contacts.js' %}"></script>
 </body>
 {% endblock %}
 

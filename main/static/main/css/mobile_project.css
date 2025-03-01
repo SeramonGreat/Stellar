@@ -1,0 +1,335 @@
+/* Общие стили */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Контейнер для звезд */
+#stars-container, #shooting-stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Стили для звезд */
+.star {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 50%;
+    width: 2px;
+    height: 2px;
+    opacity: 0.5;
+    animation: twinkle 2s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+}
+
+/* Стили для падающих метеоритов */
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    animation: shootingStar 10s linear infinite;
+}
+
+@keyframes shootingStar {
+    0% {
+        transform: translate(-100px, -100px) rotate(-45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(100vw, 100vh) rotate(-45deg);
+        opacity: 0;
+    }
+}
+
+/* Заголовок */
+.header-text.neon {
+    position: absolute;
+    top: 7.5%;
+    left: 8%;
+    transform: translateX(-50%);
+    font-family: 'Verdana', sans-serif;
+    font-size: 12vw;
+    font-weight: 700;
+    color: #8b00ff;
+    text-shadow: 0 0 10px #8b00ff, 0 0 20px #8b00ff, 0 0 40px #8b00ff, 0 0 80px #8b00ff;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+/* Контейнер для блоков контента */
+.content-blocks-container {
+    position: absolute;
+    top: 17.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 10px;
+    z-index: 1;
+}
+
+/* Блоки контента */
+.content-block {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.2s forwards;
+}
+
+/* Увеличение блока при наведении */
+.content-block:hover {
+    transform: scale(1.05) translateY(0) !important;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Псевдоэлемент для полупрозрачного фона */
+.content-block::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+/* Цвета для блоков */
+.content-block.info {
+    border-color: #00e1ff;
+    box-shadow: 0 0 10px #00e1ff;
+    color: #00e1ff;
+}
+
+/* Иконки */
+.icon {
+    font-size: 4rem;
+    margin-right: 20px;
+}
+
+.content-block.info .icon {
+    color: #00e1ff;
+}
+
+/* Текст */
+.text {
+    flex: 1;
+    text-align: left;
+    color: inherit;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.text p {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+/* Кнопка "Вперед к звездам!" */
+.action-button-container {
+    position: absolute;
+    bottom: 32.5%;
+    left: 8%;
+    transform: translateX(-50%);
+    z-index: 1;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.4s forwards;
+    width: 85%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.action-button {
+    background-color: transparent;
+    border: 2px solid #8b00ff;
+    border-radius: 10px;
+    color: #8b00ff;
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 5px #8b00ff, 0 0 10px #8b00ff;
+    animation: colorFlow 3s infinite linear;
+}
+
+/* Анимация переливания фиолетового */
+@keyframes colorFlow {
+    0% {
+        border-color: #8b00ff;
+        box-shadow: 0 0 5px #8b00ff, 0 0 10px #8b00ff;
+    }
+    50% {
+        border-color: #6a00cc;
+        box-shadow: 0 0 5px #6a00cc, 0 0 10px #6a00cc;
+    }
+    100% {
+        border-color: #8b00ff;
+        box-shadow: 0 0 5px #8b00ff, 0 0 10px #8b00ff;
+    }
+}
+
+/* Неоновое свечение при наведении */
+.action-button:hover {
+    background-color: rgba(139, 0, 255, 0.1);
+    box-shadow: 0 0 10px #8b00ff, 0 0 20px #8b00ff;
+}
+
+/* Анимация при нажатии */
+.action-button:active {
+    background-color: #8b00ff;
+    color: #fff;
+    box-shadow: 0 0 10px #8b00ff, 0 0 20px #8b00ff;
+    transform: scale(0.95);
+}
+
+/* Импульсы при нажатии */
+.action-button:active::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    animation: pulse 0.5s ease-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(3);
+        opacity: 0;
+    }
+}
+
+/* Иконка GitHub */
+.github-icon {
+    position: absolute;
+    bottom: -7%;
+    left: 25%;
+    transform: translateX(-50%);
+    z-index: 1;
+    font-size: 12rem;
+    color: #fff;
+    transition: all 0.5s ease;
+    opacity: 1; /* Убедимся, что иконка всегда видима */
+    animation: fadeInUp 1s ease-out 0.6s forwards;
+}
+
+.github-icon:hover {
+    color: #8b00ff;
+    transform: translateX(-50%) scale(1.2);
+    filter: drop-shadow(0 0 10px #8b00ff) drop-shadow(0 0 20px #00e1ff);
+}
+
+/* Градиентное свечение при наведении */
+.github-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(139, 0, 255, 0.3), transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: -1;
+}
+
+.github-icon:hover::before {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* Пульсация */
+.github-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent 70%);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    opacity: 0;
+    animation: pulse 2s infinite;
+    z-index: -1;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+/* Анимация fadeInUp */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -2,18 +2,46 @@
 
 {% load static %}
 
-{% block title %}Поддержка{% endblock %}
+{% block title %}Проект{% endblock %}
 
 {% block content %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Mobile Support</title>
-    <link rel="stylesheet" href="{% static 'main/css/mobile.css' %}">
+    <title>Проект</title>
+    <link rel="stylesheet" href="{% static 'main/css/mobile_project.css' %}">
 </head>
 <body>
-    <h1>Страница поддержки (мобильная версия)</h1>
-    <p>Здесь вы можете найти информацию о поддержке.</p>
+    <!-- Звездный фон -->
+    <div id="stars-container"></div>
+    <div id="shooting-stars-container"></div>
+
+    <!-- Заголовок -->
+    <div class="header-text neon fadeInUp">Проект Stellar</div>
+
+    <!-- Блоки контента -->
+    <div class="content-blocks-container">
+        <!-- Блок с информацией -->
+        <div class="content-block info fadeInUp" style="animation-delay: 0.2s;">
+            <div class="icon"><i class="fa-solid fa-circle-info"></i></div>
+            <div class="text">
+                <p>На нашей GitHub-странице вы сможете найти всю необходимую информацию и ознакомиться с нашим проектом.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопка "Вперед к звездам!" -->
+    <div class="action-button-container fadeInUp" style="animation-delay: 0.4s;">
+        <button id="action-button" class="action-button">Вперед к звездам!</button>
+    </div>
+
+    <!-- Иконка GitHub -->
+    <div class="github-icon fadeInUp" style="animation-delay: 0.6s;">
+        <i class="fa-brands fa-github"></i>
+    </div>
+
+    <!-- Подключаем JavaScript -->
+    <script src="{% static 'main/js/mobile_project.js' %}"></script>
 </body>
 {% endblock %}
 
