@@ -1,6 +1,247 @@
 /* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
 @import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
 
+/* Улучшенный блок выбора режима */
+#mode-selection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #0a0e17 0%, #000000 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: #fff;
+    font-family: 'Orbitron', 'Anonymous Pro', sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.mode-title-container {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+    animation: slideDown 0.8s ease-out 0.3s both;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.mode-title {
+    font-size: clamp(24px, 5vw, 36px);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #8b00ff, #00b8ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 10px rgba(139, 0, 255, 0.3);
+    animation: titleGlow 2s infinite alternate;
+}
+
+.mode-subtitle {
+    font-size: clamp(12px, 2.5vw, 16px);
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+.mode-buttons {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 2;
+}
+
+.mode-btn {
+    background: rgba(20, 10, 30, 0.6);
+    border: 1px solid rgba(139, 0, 255, 0.3);
+    border-radius: 12px;
+    color: white;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: buttonAppear 0.6s ease-out forwards;
+}
+
+.mode-btn:nth-child(1) {
+    animation-delay: 0.5s;
+}
+
+.mode-btn:nth-child(2) {
+    animation-delay: 0.7s;
+}
+
+@keyframes buttonAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mode-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(139, 0, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.mode-btn:hover {
+    transform: translateY(-5px);
+    border-color: rgba(139, 0, 255, 0.6);
+    box-shadow: 0 8px 25px rgba(139, 0, 255, 0.4);
+}
+
+.mode-btn:hover::before {
+    left: 100%;
+}
+
+.btn-icon {
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(139, 0, 255, 0.15);
+    color: #8b00ff;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.mode-btn:hover .btn-icon {
+    background: rgba(139, 0, 255, 0.3);
+    color: #a64dff;
+    transform: scale(1.1);
+}
+
+.btn-content {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.btn-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.mode-btn:hover .btn-title {
+    color: #c285ff;
+}
+
+.btn-desc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'Anonymous Pro', monospace;
+    transition: all 0.3s ease;
+}
+
+.mode-btn:hover .btn-desc {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.btn-arrow {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s;
+}
+
+.mode-btn:hover .btn-arrow {
+    color: #8b00ff;
+    transform: translateX(5px);
+}
+
+.mode-footer {
+    margin-top: 40px;
+    text-align: center;
+    z-index: 2;
+    width: 100%;
+    max-width: 300px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out 1s forwards;
+}
+
+.footer-text {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.footer-line {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(139, 0, 255, 0.5), transparent);
+}
+
+@keyframes titleGlow {
+    0% {
+        text-shadow: 0 0 10px rgba(139, 0, 255, 0.3);
+    }
+    100% {
+        text-shadow: 0 0 20px rgba(139, 0, 255, 0.6), 0 0 30px rgba(0, 184, 255, 0.3);
+    }
+}
+
+/* Анимация фона */
+#mode-selection::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="1" fill="rgba(139, 0, 255, 0.1)"/></svg>');
+    background-size: 20px 20px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Эффект частиц */
+.particle {
+    position: absolute;
+    background-color: rgba(139, 0, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Основные стили */
 html, body {
     margin: 0;
     padding: 0;
@@ -35,7 +276,7 @@ html, body {
     width: 1px;
     height: 1px;
     background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-    animation: shoot 1s infinite;
+    animation: shoot 3s infinite;
 }
 
 @keyframes twinkle {
@@ -44,8 +285,16 @@ html, body {
 }
 
 @keyframes shoot {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(100px, 100px); }
+    0% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% {
+        transform: translate(300px, 300px);
+        opacity: 0;
+    }
 }
 
 .overlay {
@@ -58,7 +307,6 @@ html, body {
     z-index: 1;
 }
 
-/* Анимация печати для текста */
 #typing-text-container {
     position: absolute;
     top: 11%;
@@ -77,7 +325,6 @@ html, body {
     overflow: hidden;
 }
 
-/* Анимация для курсора заголовка */
 #typing-text.cursor::after {
     content: '';
     display: inline-block;
@@ -96,38 +343,14 @@ html, body {
     to { opacity: 0; }
 }
 
-/* Стили для кнопки "Пропустить" */
-#skip-button {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    background-color: #0f0;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    font-family: 'Anonymous Pro', monospace;
-    font-size: 16px;
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-    z-index: 5;
-    display: none; /* Скрываем кнопку по умолчанию */
-}
-
-#skip-button:hover {
-    opacity: 1;
-}
-
-/* Блок для сообщений */
 #chat-container {
     position: absolute;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
-    height: 300px;
+    height: auto;
+    min-height: 300px;
     background: rgba(0, 0, 0, 1);
     border: 2px solid #0f0;
     border-radius: 10px;
@@ -150,7 +373,7 @@ html, body {
 
 #chat-content {
     padding: 10px;
-    height: calc(100% - 40px);
+    height: calc(100% - 120px);
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -175,7 +398,6 @@ html, body {
     display: inline-block;
 }
 
-/* Курсор для текста */
 .message .cursor {
     display: inline-block;
     width: 2px;
@@ -184,7 +406,6 @@ html, body {
     animation: blinkCursor 1s ease-in-out infinite;
 }
 
-/* Монитор с черным экраном */
 .monitor-container {
     position: absolute;
     bottom: 25px;
@@ -229,7 +450,6 @@ html, body {
     box-sizing: border-box;
 }
 
-/* Стили для падающих символов */
 .matrix-column {
     position: absolute;
     top: -100%;
@@ -259,32 +479,153 @@ html, body {
     50% { opacity: 1; }
 }
 
-/* Стили для кнопок */
-.button-container {
-    display: flex;
+/* Стили для кнопок чата */
+#chat-buttons {
+    display: none; /* Сначала скрываем, покажем после диалога */
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 15px;
+    padding: 15px;
+    padding-top: 0;
+    margin-top: -10px;
+    background: rgba(0, 0, 0, 0.7);
+    border-top: none;
 }
 
-.btn-wrapper {
-    text-decoration: none;
-}
-
-.btn {
-    padding: 10px 20px;
-    background-color: #0f0;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    font-family: 'Anonymous Pro', monospace;
-    font-size: 16px;
+.chat-btn {
+    background: rgba(20, 10, 30, 0.6);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    border-radius: 8px;
+    color: white;
+    padding: 12px 15px;
     cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.btn:hover {
-    opacity: 1;
+.chat-btn:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 255, 0, 0.6);
+    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+}
+
+.chat-btn .btn-icon {
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 255, 0, 0.15);
+    color: #0f0;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.chat-btn:hover .btn-icon {
+    background: rgba(0, 255, 0, 0.3);
+    color: #4dff4d;
+    transform: scale(1.1);
+}
+
+.chat-btn .btn-content {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.chat-btn .btn-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 3px;
+    color: #0f0;
+    transition: all 0.3s ease;
+}
+
+.chat-btn:hover .btn-title {
+    color: #4dff4d;
+}
+
+.chat-btn .btn-desc {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'Anonymous Pro', monospace;
+    transition: all 0.3s ease;
+}
+
+.chat-btn:hover .btn-desc {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.skip-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #0f0;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* Анимации для матрицы */
+.matrix-column span {
+    opacity: 0.8;
+    animation: fadeInOut 1.5s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Эффекты для кнопок режимов */
+.mode-btn {
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.mode-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(139, 0, 255, 0.4);
+}
+
+.mode-btn:active {
+    transform: translateY(0);
+}
+
+/* Плавные анимации для режима космонавта */
+#main-content {
+    transition: opacity 1s ease;
+}
+
+.matrix-column {
+    transition: opacity 1s ease;
+}
+
+.matrix-column span {
+    transition: opacity 0.8s ease;
+}
+
+/* Эффекты для режима выбора */
+#mode-selection {
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.mode-btn {
+    transition: all 0.3s ease, transform 0.3s ease;
+}
+
+.mode-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 5px 15px rgba(139, 0, 255, 0.4);
+}
+
+.mode-btn:active {
+    transform: translateY(1px);
 }

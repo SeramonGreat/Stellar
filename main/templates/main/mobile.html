@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Mobile Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'main/css/mobile.css' %}">
 </head>
 <body>
@@ -16,30 +17,75 @@
     <div id="shooting-stars-container"></div>
     <div class="overlay"></div>
 
-    <!-- Заголовок -->
-    <div id="typing-text-container">
-        <span id="typing-text"></span>
-    </div>
-
-    <!-- Блок для сообщений -->
-    <div id="chat-container">
-        <div id="chat-header">Система Разработчика</div>
-        <div id="chat-content"></div>
-        <!-- Кнопки -->
-        <div id="chat-buttons">
-            <button class="chat-button">Проект</button>
-            <button class="chat-button">Контакты</button>
-            <button class="chat-button">Поддержка</button>
+    <!-- Улучшенный блок выбора режима -->
+    <div id="mode-selection">
+        <div class="mode-title-container">
+            <div class="mode-title">ВЫБЕРИТЕ РЕЖИМ</div>
+            <div class="mode-subtitle">Stellar Official Site</div>
         </div>
-        <!-- Кнопка "Пропустить" -->
-        <button id="skip-button" class="skip-button">Пропустить</button>
+        <div class="mode-buttons">
+            <button id="guest-btn" class="mode-btn">
+                <div class="btn-icon"><i class="fas fa-user-astronaut"></i></div>
+                <div class="btn-content">
+                    <div class="btn-title">Гость</div>
+                    <div class="btn-desc">Информация(Рекомендую)</div>
+                </div>
+                <div class="btn-arrow"><i class="fas fa-chevron-right"></i></div>
+            </button>
+            <button id="astronaut-btn" class="mode-btn">
+                <div class="btn-icon"><i class="fas fa-rocket"></i></div>
+                <div class="btn-content">
+                    <div class="btn-title">Космонавт</div>
+                    <div class="btn-desc">Функции</div>
+                </div>
+                <div class="btn-arrow"><i class="fas fa-chevron-right"></i></div>
+            </button>
+        </div>
+        <div class="mode-footer">
+            <div class="footer-text">@ Space Soft 2025</div>
+            <div class="footer-line"></div>
+        </div>
     </div>
 
-    <!-- Монитор с черным экраном -->
-    <div class="monitor-container">
-        <div class="monitor">
-            <div class="screen">
-                <div id="code-container"></div>
+    <!-- Основной контент -->
+    <div id="main-content" style="display:none;">
+        <div id="typing-text-container">
+            <span id="typing-text"></span>
+        </div>
+
+        <div id="chat-container">
+            <div id="chat-header">Система Разработчика</div>
+            <div id="chat-content"></div>
+            <div id="chat-buttons">
+                <button class="chat-btn" data-url="/mobile/project">
+                    <div class="btn-icon"><i class="fas fa-code"></i></div>
+                    <div class="btn-content">
+                        <div class="btn-title">Проект</div>
+                        <div class="btn-desc">GitHub репозиторий</div>
+                    </div>
+                </button>
+                <button class="chat-btn" data-url="/mobile/contacts">
+                    <div class="btn-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="btn-content">
+                        <div class="btn-title">Контакты</div>
+                        <div class="btn-desc">Связь с разработчиком</div>
+                    </div>
+                </button>
+                <button class="chat-btn" data-url="/mobile/support">
+                    <div class="btn-icon"><i class="fas fa-question-circle"></i></div>
+                    <div class="btn-content">
+                        <div class="btn-title">Поддержка</div>
+                        <div class="btn-desc">Помощь и вопросы</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div class="monitor-container">
+            <div class="monitor">
+                <div class="screen">
+                    <div id="code-container"></div>
+                </div>
             </div>
         </div>
     </div>

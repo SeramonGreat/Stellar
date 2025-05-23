@@ -121,3 +121,13 @@ main {
         left: 0;
     }
 }
+
+/* Гарантированное отключение курсора для всех элементов */
+* {
+    cursor: none !important;
+}
+
+/* Для iframe (если есть на странице) */
+iframe {
+    pointer-events: none;
+}

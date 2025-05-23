@@ -1,179 +1,192 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const starsContainer = document.getElementById("stars-container");
-    const shootingStarsContainer = document.getElementById("shooting-stars-container");
-    const typingText = document.getElementById('typing-text');
-    const codeContainer = document.getElementById('code-container');
-    const chatContent = document.getElementById('chat-content');
-    const skipButton = document.getElementById('skip-button');
+document.addEventListener("DOMContentLoaded", function() {
+    // Основные элементы
+    const modeSelection = document.getElementById("mode-selection");
+    const mainContent = document.getElementById("main-content");
+    const guestBtn = document.getElementById("guest-btn");
+    const astronautBtn = document.getElementById("astronaut-btn");
+    const typingTextContainer = document.getElementById("typing-text-container");
+    const typingText = document.getElementById("typing-text");
+    const chatContent = document.getElementById("chat-content");
+    const codeContainer = document.getElementById("code-container");
+    const chatButtons = document.getElementById("chat-buttons");
 
-    let isSkipped = false; // Флаг для отслеживания нажатия кнопки "Пропустить"
-    let buttonsCreated = false; // Флаг для отслеживания создания кнопок
+    // Инициализация звездного неба
+    function initStars() {
+        const starsContainer = document.getElementById("stars-container");
+        const shootingStarsContainer = document.getElementById("shooting-stars-container");
 
-    // Генерация звезд и метеоров
-    for (let i = 0; i < 300; i++) {
-        const star = document.createElement("div");
-        star.className = "star";
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.animationDuration = `${Math.random() * 2 + 1}s`;
-        starsContainer.appendChild(star);
-    }
+        starsContainer.innerHTML = '';
+        shootingStarsContainer.innerHTML = '';
 
-    for (let i = 0; i < 30; i++) {
-        const shootingStar = document.createElement("div");
-        shootingStar.className = "shooting-star";
-        shootingStar.style.top = `${Math.random() * 100}%`;
-        shootingStar.style.left = `${Math.random() * 100}%`;
-        shootingStar.style.animationDelay = `${Math.random() * 10}s`;
-        shootingStarsContainer.appendChild(shootingStar);
-    }
+        // Статичные звезды
+        for (let i = 0; i < 300; i++) {
+            const star = document.createElement("div");
+            star.className = "star";
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.animationDuration = `${Math.random() * 2 + 1}s`;
+            star.style.opacity = '0';
+            starsContainer.appendChild(star);
 
-    // Анимация печати текста в заголовке
-    const textToType = "Welcome To Stellar";
-    let charIndex = 0;
-
-    function typeNextCharacter() {
-        if (charIndex < textToType.length) {
-            typingText.textContent += textToType.charAt(charIndex);
-            charIndex++;
-            setTimeout(typeNextCharacter, 50);
-        } else {
-            typingText.classList.add('cursor');
             setTimeout(() => {
-                typingText.classList.remove('cursor');
-            }, 1000);
+                star.style.transition = 'opacity 1.5s ease';
+                star.style.opacity = '1';
+            }, Math.random() * 1000);
+        }
+
+        // Падающие звезды
+        for (let i = 0; i < 30; i++) {
+            const shootingStar = document.createElement("div");
+            shootingStar.className = "shooting-star";
+            shootingStar.style.top = `${Math.random() * 100}%`;
+            shootingStar.style.left = `${Math.random() * 100}%`;
+            shootingStar.style.animationDelay = `${Math.random() * 10}s`;
+            shootingStarsContainer.appendChild(shootingStar);
         }
     }
 
-    typeNextCharacter();
+    // Инициализация частиц для блока выбора режима
+    function initParticles() {
+        const container = document.getElementById("mode-selection");
 
-    // Генерация матрицы на мониторе
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+";
-    const columns = Math.floor(codeContainer.offsetWidth / 10);
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement("div");
+            particle.className = "particle";
 
-    function createMatrixColumn(index) {
-        const column = document.createElement("div");
-        column.className = "matrix-column";
-        column.style.left = `${index * 20}px`;
-        column.style.animationDuration = `${Math.random() * 2 + 1}s`;
-        codeContainer.appendChild(column);
+            particle.style.width = `${Math.random() * 5 + 1}px`;
+            particle.style.height = particle.style.width;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.opacity = '0';
+            particle.style.transition = `all ${Math.random() * 10 + 5}s linear`;
 
-        const symbolCount = Math.floor(Math.random() * 20) + 10;
-        for (let i = 0; i < symbolCount; i++) {
-            const symbol = document.createElement("span");
-            symbol.textContent = characters[Math.floor(Math.random() * characters.length)];
-            symbol.style.animationDelay = `${Math.random() * 2}s`;
-            column.appendChild(symbol);
+            container.appendChild(particle);
+
+            setTimeout(() => {
+                particle.style.opacity = '0.3';
+                particle.style.transform = `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px)`;
+            }, 100);
         }
-
-        column.addEventListener("animationend", () => {
-            column.remove();
-            createMatrixColumn(index);
-        });
     }
 
-    for (let i = 0; i < columns; i++) {
-        createMatrixColumn(i);
-    }
+    // Инициализация матрицы
+    function initMatrix() {
+        codeContainer.innerHTML = '';
+        const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const columns = Math.floor(codeContainer.offsetWidth / 20);
 
-    // Функция для печати текста с анимацией
-    function typeText(element, text, speed, onComplete) {
-        let charIndex = 0;
+        function createColumn(index) {
+            const col = document.createElement("div");
+            col.className = "matrix-column";
+            col.style.left = `${index * 20}px`;
+            col.style.animationDuration = `${Math.random() * 5 + 3}s`;
+            col.style.opacity = '0';
+            codeContainer.appendChild(col);
 
-        function typeNextCharacter() {
-            if (charIndex < text.length && !isSkipped) {
-                element.textContent += text.charAt(charIndex);
-                charIndex++;
-                setTimeout(typeNextCharacter, speed);
-            } else {
-                if (onComplete) onComplete();
+            setTimeout(() => {
+                col.style.transition = 'opacity 1s ease';
+                col.style.opacity = '1';
+            }, index * 100);
+
+            const length = Math.floor(Math.random() * 15) + 5;
+            for (let i = 0; i < length; i++) {
+                const char = document.createElement("span");
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.animationDelay = `${Math.random() * 2}s`;
+                char.style.opacity = '0';
+
+                setTimeout(() => {
+                    char.style.transition = 'opacity 0.5s ease';
+                    char.style.opacity = '0.8';
+                }, i * 50 + index * 30);
+
+                col.appendChild(char);
             }
+
+            col.addEventListener("animationend", function() {
+                this.remove();
+                createColumn(index);
+            });
         }
 
-        typeNextCharacter();
-    }
-
-    // Функция для стирания текста с анимацией
-    function eraseText(element, speed, onComplete) {
-        let text = element.textContent;
-        let length = text.length;
-
-        function eraseNextCharacter() {
-            if (length > 0 && !isSkipped) {
-                element.textContent = text.substring(0, length - 1);
-                length--;
-                setTimeout(eraseNextCharacter, speed);
-            } else {
-                if (onComplete) onComplete();
-            }
+        for (let i = 0; i < columns; i++) {
+            setTimeout(() => createColumn(i), i * 150);
         }
-
-        eraseNextCharacter();
     }
 
-    // Функция для плавного исчезновения текста
-    function fadeOutText(element, speed, onComplete) {
-        element.style.transition = `opacity ${speed}ms ease`;
-        element.style.opacity = '0';
+    // Анимация печати заголовка
+    function initTypingAnimation() {
+        typingText.textContent = '';
+        typingTextContainer.style.display = 'block';
+        typingTextContainer.style.opacity = '0';
+        typingTextContainer.style.transition = 'opacity 0.8s ease';
+
         setTimeout(() => {
-            if (onComplete) onComplete();
-        }, speed);
-    }
+            typingTextContainer.style.opacity = '1';
+        }, 100);
 
-    // Функция для анимации смены отправителя
-    function replaceSender(senderElement, newSender, speed, onComplete) {
+        const textToType = "Welcome To Stellar";
         let charIndex = 0;
 
         function typeNextCharacter() {
-            if (charIndex < newSender.length && !isSkipped) {
-                senderElement.textContent = newSender.substring(0, charIndex + 1);
+            if (charIndex < textToType.length) {
+                const charSpan = document.createElement('span');
+                charSpan.textContent = textToType.charAt(charIndex);
+                charSpan.style.opacity = '0';
+                charSpan.style.transition = 'opacity 0.3s ease';
+                typingText.appendChild(charSpan);
+
+                setTimeout(() => {
+                    charSpan.style.opacity = '1';
+                }, 50);
+
                 charIndex++;
-                setTimeout(typeNextCharacter, speed);
+                setTimeout(typeNextCharacter, 120);
             } else {
-                if (onComplete) onComplete();
+                typingText.classList.add('cursor');
+                setTimeout(() => {
+                    typingText.classList.remove('cursor');
+                }, 1000);
             }
         }
 
-        // Сначала стираем текущий текст
-        eraseText(senderElement, speed, () => {
-            // Затем печатаем новый текст
-            typeNextCharacter();
-        });
+        setTimeout(typeNextCharacter, 300);
     }
 
-    // Функция для создания кнопок
-    function createButtons() {
-        if (buttonsCreated) return; // Если кнопки уже созданы, выходим
-        buttonsCreated = true; // Устанавливаем флаг, что кнопки созданы
+    // Показать заголовок сразу (для режима космонавта)
+    function showTitleImmediately() {
+        typingText.textContent = "Welcome To Stellar";
+        typingTextContainer.style.display = 'block';
+        typingTextContainer.style.opacity = '0';
 
-        const buttonContainer = document.createElement('div');
-        buttonContainer.className = 'button-container';
+        typingText.innerHTML = '';
+        const text = "Welcome To Stellar";
+        for (let i = 0; i < text.length; i++) {
+            const charSpan = document.createElement('span');
+            charSpan.textContent = text.charAt(i);
+            charSpan.style.opacity = '0';
+            charSpan.style.transition = `opacity 0.3s ease ${i * 50}ms`;
+            typingText.appendChild(charSpan);
+        }
 
-        const links = [
-            { href: "/mobile/contacts", text: "Контакты" },
-            { href: "/mobile/project", text: "Проект" },
-            { href: "/mobile/support", text: "Поддержка" }
-        ];
+        setTimeout(() => {
+            typingTextContainer.style.transition = 'opacity 0.8s ease';
+            typingTextContainer.style.opacity = '1';
 
-        links.forEach(link => {
-            const btnWrapper = document.createElement('a');
-            btnWrapper.href = link.href;
-            btnWrapper.className = 'btn-wrapper';
-
-            const btn = document.createElement('span');
-            btn.className = 'btn btn-warning';
-            btn.textContent = link.text;
-
-            btnWrapper.appendChild(btn);
-            buttonContainer.appendChild(btnWrapper);
-        });
-
-        chatContent.appendChild(buttonContainer);
+            const chars = typingText.querySelectorAll('span');
+            chars.forEach((char, index) => {
+                setTimeout(() => {
+                    char.style.opacity = '1';
+                }, index * 50);
+            });
+        }, 300);
     }
 
-    // Основная функция для анимации чата
+    // Анимация чата
     async function startChatAnimation() {
-        // Создаем элементы для чата
+        chatContent.innerHTML = '';
+        chatButtons.style.display = 'none';
+
         const messageElement = document.createElement('div');
         messageElement.className = 'message';
         chatContent.appendChild(messageElement);
@@ -187,127 +200,155 @@ document.addEventListener("DOMContentLoaded", function () {
         textElement.className = 'text';
         messageElement.appendChild(textElement);
 
-        // Первый текст
-        await new Promise((resolve) => {
-            typeText(textElement, "Приветствую, пользователь!", 50, resolve);
-        });
+        await typeText(textElement, "Приветствую, пользователь!", 50);
+        await delay(3000);
+        await eraseText(textElement, 20);
+        await replaceSender(senderElement, "SeramonGreat", 50);
+        await typeText(textElement, "Здравствуйте! Меня зовут SeramonGreat, и я — создатель сайта Stellar.", 50);
+        await delay(3000);
+        await eraseText(textElement, 20);
+        await typeText(textElement, "Stellar — это новая операционная система для повышения производительности.", 50);
+        await delay(3000);
+        await eraseText(textElement, 20);
+        await typeText(textElement, "Этот сайт создан, чтобы помочь вам познакомиться с нашим проектом!", 50);
+        await delay(3000);
 
-        // Ждем 3 секунды
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        // Очищаем чат перед показом кнопок
+        chatContent.innerHTML = '';
 
-        // Стираем первый текст
-        await new Promise((resolve) => {
-            eraseText(textElement, 20, resolve); // Ускоренное стирание
-        });
+        // Показываем кнопки плавно
+        chatButtons.style.display = 'flex';
+        chatButtons.style.opacity = '0';
+        chatButtons.style.transition = 'opacity 0.8s ease';
 
-        // Меняем отправителя на "SeramonGreat" с анимацией
-        await new Promise((resolve) => {
-            replaceSender(senderElement, "SeramonGreat", 50, resolve);
-        });
-
-        // Второй текст
-        await new Promise((resolve) => {
-            typeText(textElement, "Здравствуйте! Меня зовут SeramonGreat, и я — создатель сайта Stellar. С радостью отвечу на ваш вопрос о том, что такое Stellar.", 50, resolve);
-        });
-
-        // Ждем 3 секунды
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-
-        // Стираем второй текст
-        await new Promise((resolve) => {
-            eraseText(textElement, 20, resolve); // Ускоренное стирание
-        });
-
-        // Третий текст (описание)
-        const description = `
-Stellar — это новая операционная система, разработанная для повышения производительности и удобства пользователей. Она сочетает высокую производительность благодаря оптимизированному ядру ⚡.
-Современный интуитивно понятный графический интерфейс 🎨 и поддержку многозадачности 🔄 для работы с несколькими приложениями одновременно.
-
-Ядро Stellar Aurora System 🛠️ обеспечивает стабильность и безопасность на высшем уровне.
-Операционная система создаётся отечественными разработчиками 🇷🇺 с учётом потребностей пользователей.
-Среди особенностей — поддержка ввода текста на множестве языков 🌍.
-Непрерывное совершенствование системы 🔧.
-Прозрачность и открытость в работе 🔍, а также внедрение инновационных технологий для удобства пользователей 🚀. Безопасность и конфиденциальность данных всегда в приоритете 🔒.
-
-Мы стремимся к тому, чтобы каждый пользователь чувствовал себя уверенно и комфортно в цифровом мире с надёжной и качественной операционной системой. Вперёд к новым горизонтам с Stellar! ✨
-        `;
-
-        // Показываем кнопку "Пропустить" при начале печати описания
-        skipButton.style.display = 'block';
-
-        await new Promise((resolve) => {
-            typeText(textElement, description.trim(), 50, resolve);
-        });
-
-        // Скрываем кнопку "Пропустить" после завершения анимации
-        skipButton.style.display = 'none';
-
-        // Ждем 3 секунды перед исчезновением третьего текста
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-
-        // Плавное исчезновение третьего текста
-        await new Promise((resolve) => {
-            fadeOutText(textElement, 500, resolve);
-        });
-
-        // Удаляем текст и отправителя
-        textElement.textContent = '';
-        senderElement.textContent = '';
-
-        // Четвертый текст
-        const fourthText = "Однако этот сайт создан, чтобы помочь тебе или познакомить с нашим проектом. Выбор за тобой! Удачи, первооткрыватель!";
-        await new Promise((resolve) => {
-            typeText(textElement, fourthText, 50, resolve);
-        });
-
-        // Ждем 3 секунды перед исчезновением четвертого текста
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-
-        // Плавное исчезновение четвертого текста
-        await new Promise((resolve) => {
-            fadeOutText(textElement, 500, resolve);
-        });
-
-        // Удаляем текст
-        textElement.textContent = '';
-
-        // Создаем кнопки
-        createButtons();
+        setTimeout(() => {
+            chatButtons.style.opacity = '1';
+        }, 200);
     }
 
-    // Запуск анимации чата
-    startChatAnimation();
+    // Вспомогательные функции
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
-    // Обработчик для кнопки "Пропустить"
-    skipButton.addEventListener('click', () => {
-        isSkipped = true; // Устанавливаем флаг пропуска
+    async function typeText(element, text, speed) {
+        return new Promise((resolve) => {
+            let charIndex = 0;
+            element.textContent = '';
 
-        // Пропускаем анимацию (плавно исчезает третий текст и появляется четвертый)
-        const textElement = chatContent.querySelector('.text');
+            function typeNextCharacter() {
+                if (charIndex < text.length) {
+                    element.textContent += text.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeNextCharacter, speed);
+                } else {
+                    resolve();
+                }
+            }
 
-        // Плавное исчезновение третьего текста
-        fadeOutText(textElement, 500, () => {
-            textElement.textContent = ''; // Очищаем текст
-            textElement.style.opacity = '1'; // Возвращаем прозрачность
+            typeNextCharacter();
+        });
+    }
 
-            // Четвертый текст
-            const fourthText = "Однако этот сайт создан, чтобы помочь тебе или познакомить с нашим проектом. Выбор за тобой! Удачи, первооткрыватель!";
-            isSkipped = false; // Сбрасываем флаг пропуска, чтобы анимация четвертого текста работала
-            typeText(textElement, fourthText, 50, () => {
-                skipButton.style.display = 'none'; // Скрываем кнопку "Пропустить"
+    async function eraseText(element, speed) {
+        return new Promise((resolve) => {
+            let text = element.textContent;
+            let length = text.length;
 
-                // Ждем 3 секунды перед исчезновением четвертого текста
+            function eraseNextCharacter() {
+                if (length > 0) {
+                    element.textContent = text.substring(0, length - 1);
+                    length--;
+                    setTimeout(eraseNextCharacter, speed);
+                } else {
+                    resolve();
+                }
+            }
+
+            eraseNextCharacter();
+        });
+    }
+
+    async function replaceSender(element, newText, speed) {
+        await eraseText(element, speed);
+        await typeText(element, newText, speed);
+    }
+
+    // Обработчики кнопок режимов
+    function startNormalMode() {
+        modeSelection.style.opacity = '0';
+        modeSelection.style.pointerEvents = 'none';
+        modeSelection.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        modeSelection.style.transform = 'scale(0.9)';
+
+        setTimeout(() => {
+            modeSelection.style.display = 'none';
+            mainContent.style.display = 'block';
+            mainContent.style.opacity = '0';
+
+            setTimeout(() => {
+                mainContent.style.transition = 'opacity 1s ease';
+                mainContent.style.opacity = '1';
+
+                initStars();
+                initMatrix();
+                initTypingAnimation();
+                startChatAnimation();
+            }, 100);
+        }, 800);
+    }
+
+    function startAstronautMode() {
+        modeSelection.style.opacity = '0';
+        modeSelection.style.pointerEvents = 'none';
+        modeSelection.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        modeSelection.style.transform = 'scale(0.9)';
+
+        setTimeout(() => {
+            modeSelection.style.display = 'none';
+            mainContent.style.display = 'block';
+            mainContent.style.opacity = '0';
+
+            setTimeout(() => {
+                mainContent.style.transition = 'opacity 1s ease';
+                mainContent.style.opacity = '1';
+
+                initStars();
+                initMatrix();
+                showTitleImmediately();
+                chatContent.innerHTML = '';
+                chatButtons.style.display = 'flex';
+                chatButtons.style.opacity = '0';
+                chatButtons.style.transition = 'opacity 0.8s ease';
+
                 setTimeout(() => {
-                    // Плавное исчезновение четвертого текста
-                    fadeOutText(textElement, 500, () => {
-                        textElement.textContent = ''; // Очищаем текст
-                        textElement.style.opacity = '1'; // Возвращаем прозрачность
+                    chatButtons.style.opacity = '1';
+                }, 200);
+            }, 100);
+        }, 800);
+    }
 
-                        // Создаем кнопки
-                        createButtons();
-                    });
-                }, 3000);
-            });
+    // Обработчики кликов
+    guestBtn.addEventListener('click', startNormalMode);
+    astronautBtn.addEventListener('click', startAstronautMode);
+
+    // Обработчики кнопок чата
+    document.querySelectorAll('.chat-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.getAttribute('data-url');
+            this.style.backgroundColor = '#8b00ff';
+            this.style.color = 'white';
+            this.style.borderColor = '#8b00ff';
+            this.style.boxShadow = '0 0 10px #8b00ff, 0 0 20px #8b00ff';
+
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1000);
         });
     });
+
+    // Инициализация при загрузке
+    initStars();
+    initParticles();
 });

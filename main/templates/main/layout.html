@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Stellar - Технологи Новых Возможностей!</title>
+    <title>Stellar - Система Новых Возможностей!</title>
     <meta name="description" content="Stellar - это новая операционная система, разработанная для повышения производительности и удобства использования, мы предлагаем новые возможности для вас!.">
     <meta name="keywords" content="Stellar, операционная система, производительность, удобство использования, новости, установка, настройки">
     <meta name="google-site-verification" content="Mf47idUQ8QHlHvlFUleK-q559ArZfE5rFtioOfN2Okw" />
@@ -17,9 +17,107 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
-    <link rel="icon" href="{% static 'main/image/StellarLogo.png' %}" type="image/png">
+    <link rel="icon" href="{% static 'main/image/Logo.png' %}" type="image/png">
 
     <style>
+        /* Оптимизированные стили для курсора */
+        .stellar-cursor {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+            z-index: 9999;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%238B00FF" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path fill="%238B00FF" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/></svg>') no-repeat center center;
+            filter: drop-shadow(0 0 5px #8B00FF);
+            transform: translate(-50%, -50%);
+            will-change: transform;
+        }
+
+        /* Неоновый след (оптимизированный) */
+        .cursor-trail {
+            position: fixed;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139, 0, 255, 0.8) 0%, rgba(139, 0, 255, 0) 70%);
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            will-change: transform, opacity;
+            transition: opacity 0.3s ease-out;
+            mix-blend-mode: screen;
+        }
+
+        /* Эффект дыма (оптимизированный) */
+        .cursor-smoke-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139, 0, 255, 0.7) 0%, rgba(139, 0, 255, 0) 70%);
+            pointer-events: none;
+            z-index: 9996;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            filter: blur(1px);
+            will-change: transform, opacity;
+        }
+
+        /* Эффекты клика */
+        .cursor-click-effect {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #8B00FF;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9997;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        .cursor-ripple {
+            position: fixed;
+            border: 2px solid rgba(139, 0, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9995;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        /* Анимации */
+        @keyframes smokeEffect {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) translateY(-40px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes rippleEffect {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(3);
+                opacity: 0;
+            }
+        }
+
+        body {
+            cursor: none;
+            overflow-x: hidden;
+        }
+
+        /* Остальные стили остаются без изменений */
         aside ul li {
             position: relative;
         }
@@ -71,9 +169,9 @@
             color: #ffffff;
             text-align: center;
             padding: 10px;
-            font-size: 16px; /* Увеличенный размер текста */
-            z-index: 1002; /* Убедитесь, что она находится поверх других элементов */
-            transition: opacity 0.5s ease, visibility 0.5s ease; /* Плавная анимация */
+            font-size: 16px;
+            z-index: 1002;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
             opacity: 0;
             visibility: hidden;
         }
@@ -95,6 +193,9 @@
     {% block extra_styles %}{% endblock %}
 </head>
 <body>
+    <!-- Кастомные элементы курсора -->
+    <div class="stellar-cursor"></div>
+
     <!-- Основное содержимое страницы -->
     <div id="content">
         <aside>
@@ -130,6 +231,293 @@
     <script src="{% static 'main/js/custom.js' %}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Оптимизация: используем один RAF для всех анимаций
+            let lastTime = 0;
+            let lastSmokeTime = 0;
+            let lastTrailUpdate = 0;
+            const smokeInterval = 150; // Увеличили интервал для дыма
+            const trailUpdateInterval = 16; // ~60fps для следов
+
+            // Основной курсор
+            const cursor = document.querySelector('.stellar-cursor');
+            const interactiveElements = document.querySelectorAll('a, button, [data-tooltip], .button-animation, input, textarea, select');
+
+            // Позиция курсора
+            let mouseX = 0, mouseY = 0;
+            let posX = 0, posY = 0;
+            const cursorSpeed = 0.2;
+
+            // Неоновый след
+            const trailCount = 8; // Уменьшили количество следов для производительности
+            const trails = [];
+            const trailPool = [];
+
+            // Дым
+            const maxSmokeParticles = 15; // Уменьшили максимальное количество частиц
+            const smokeParticles = [];
+            const smokePool = [];
+
+            // Инициализация пула объектов для повторного использования
+            function initPools() {
+                // Пул для следов
+                for (let i = 0; i < trailCount; i++) {
+                    const trail = document.createElement('div');
+                    trail.className = 'cursor-trail';
+                    document.body.appendChild(trail);
+                    trailPool.push(trail);
+                }
+
+                // Пул для частиц дыма
+                for (let i = 0; i < maxSmokeParticles; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'cursor-smoke-particle';
+                    document.body.appendChild(particle);
+                    smokePool.push(particle);
+                }
+            }
+
+            initPools();
+
+            // Функция для получения свободного элемента из пула
+            function getFromPool(pool, activeArray) {
+                for (let i = 0; i < pool.length; i++) {
+                    if (!activeArray.includes(pool[i])) {
+                        return pool[i];
+                    }
+                }
+                return null;
+            }
+
+            // Обновление позиции курсора
+            function updateCursorPosition() {
+                posX += (mouseX - posX) * cursorSpeed;
+                posY += (mouseY - posY) * cursorSpeed;
+
+                cursor.style.left = posX + 'px';
+                cursor.style.top = posY + 'px';
+            }
+
+            // Обновление неонового следа
+            function updateTrails(time) {
+                if (time - lastTrailUpdate < trailUpdateInterval) return;
+                lastTrailUpdate = time;
+
+                // Удаляем старые следы
+                while (trails.length > 0 && trails[0].time < time - 300) {
+                    const oldTrail = trails.shift();
+                    oldTrail.element.style.opacity = 0;
+                }
+
+                // Добавляем новый след
+                if (trails.length < trailCount) {
+                    const trailElement = getFromPool(trailPool, trails.map(t => t.element));
+                    if (trailElement) {
+                        trailElement.style.left = posX + 'px';
+                        trailElement.style.top = posY + 'px';
+                        trailElement.style.opacity = 0.8;
+
+                        const hue = (time * 0.02) % 360;
+                        trailElement.style.background = `radial-gradient(circle, hsla(${hue}, 100%, 50%, 0.8) 0%, hsla(${hue}, 100%, 50%, 0) 70%)`;
+
+                        trails.push({
+                            element: trailElement,
+                            x: posX,
+                            y: posY,
+                            time: time
+                        });
+                    }
+                }
+
+                // Обновляем позиции следов с задержкой
+                trails.forEach((trail, index) => {
+                    const delayFactor = index / trails.length;
+                    trail.x += (posX - trail.x) * 0.1;
+                    trail.y += (posY - trail.y) * 0.1;
+
+                    trail.element.style.left = trail.x + 'px';
+                    trail.element.style.top = trail.y + 'px';
+                    trail.element.style.opacity = 0.8 - (delayFactor * 0.8);
+                    trail.element.style.transform = `translate(-50%, -50%) scale(${1 - delayFactor * 0.5})`;
+                });
+            }
+
+            // Обновление частиц дыма
+            function updateSmoke(time) {
+                if (time - lastSmokeTime < smokeInterval) return;
+                lastSmokeTime = time;
+
+                // Удаляем старые частицы
+                while (smokeParticles.length > 0 && smokeParticles[0].startTime < time - 1500) {
+                    const oldParticle = smokeParticles.shift();
+                    oldParticle.element.style.opacity = 0;
+                }
+
+                // Добавляем новую частицу
+                if (smokeParticles.length < maxSmokeParticles) {
+                    const particle = getFromPool(smokePool, smokeParticles.map(p => p.element));
+                    if (particle) {
+                        particle.style.left = posX + 'px';
+                        particle.style.top = posY + 'px';
+                        particle.style.opacity = 1;
+
+                        const size = 4 + Math.random() * 8;
+                        const hue = 270 + Math.random() * 40 - 20;
+                        particle.style.width = size + 'px';
+                        particle.style.height = size + 'px';
+                        particle.style.background = `radial-gradient(circle, hsla(${hue}, 100%, 50%, 0.7) 0%, hsla(${hue}, 100%, 50%, 0) 70%)`;
+
+                        const particleObj = {
+                            element: particle,
+                            startTime: time,
+                            x: posX,
+                            y: posY,
+                            velocityX: (Math.random() - 0.5) * 2,
+                            velocityY: -1 - Math.random() * 2
+                        };
+
+                        smokeParticles.push(particleObj);
+
+                        // Запускаем анимацию
+                        gsap.to(particle, {
+                            y: particle.y - 40,
+                            x: particle.x + particle.velocityX * 40,
+                            scale: 1.5,
+                            opacity: 0,
+                            duration: 1.5,
+                            ease: "power1.out",
+                            onComplete: () => {
+                                const index = smokeParticles.indexOf(particleObj);
+                                if (index > -1) smokeParticles.splice(index, 1);
+                            }
+                        });
+                    }
+                }
+            }
+
+            // Основной цикл анимации
+            function animate(time) {
+                updateCursorPosition();
+                updateTrails(time);
+                updateSmoke(time);
+                requestAnimationFrame(animate);
+            }
+
+            // Обработчики событий
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            // Эффекты при наведении на интерактивные элементы
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+                    cursor.style.filter = 'drop-shadow(0 0 10px #8B00FF) drop-shadow(0 0 20px #8B00FF)';
+
+                    // Свечение элемента
+                    const rect = el.getBoundingClientRect();
+                    const glow = document.createElement('div');
+                    glow.className = 'cursor-glow-effect';
+                    glow.style.cssText = `
+                        position: absolute;
+                        left: ${rect.left + rect.width/2}px;
+                        top: ${rect.top + rect.height/2}px;
+                        width: ${Math.max(rect.width, rect.height) * 1.5}px;
+                        height: ${Math.max(rect.width, rect.height) * 1.5}px;
+                        border-radius: 50%;
+                        background: radial-gradient(circle, rgba(139, 0, 255, 0.3) 0%, rgba(139, 0, 255, 0) 70%);
+                        pointer-events: none;
+                        z-index: 9994;
+                        transform: translate(-50%, -50%);
+                    `;
+                    document.body.appendChild(glow);
+
+                    gsap.from(glow, {
+                        scale: 0.5,
+                        opacity: 0,
+                        duration: 0.3
+                    });
+
+                    el.dataset.glowElement = glow;
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                    cursor.style.filter = 'drop-shadow(0 0 5px #8B00FF)';
+
+                    if (el.dataset.glowElement) {
+                        const glow = el.dataset.glowElement;
+                        gsap.to(glow, {
+                            scale: 0,
+                            opacity: 0,
+                            duration: 0.3,
+                            onComplete: () => glow.remove()
+                        });
+                        delete el.dataset.glowElement;
+                    }
+                });
+            });
+
+            // Эффекты при клике
+            document.addEventListener('click', (e) => {
+                // Эффект клика
+                const clickEffect = document.createElement('div');
+                clickEffect.className = 'cursor-click-effect';
+                clickEffect.style.left = e.clientX + 'px';
+                clickEffect.style.top = e.clientY + 'px';
+                document.body.appendChild(clickEffect);
+
+                gsap.to(clickEffect, {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        gsap.to(clickEffect, {
+                            scale: 1.5,
+                            opacity: 0,
+                            duration: 0.3,
+                            onComplete: () => clickEffect.remove()
+                        });
+                    }
+                });
+
+                // Ripple эффект
+                const ripple = document.createElement('div');
+                ripple.className = 'cursor-ripple';
+                ripple.style.left = e.clientX + 'px';
+                ripple.style.top = e.clientY + 'px';
+                document.body.appendChild(ripple);
+
+                gsap.to(ripple, {
+                    width: 100,
+                    height: 100,
+                    borderWidth: 1,
+                    opacity: 0,
+                    duration: 1,
+                    ease: "power2.out",
+                    onComplete: () => ripple.remove()
+                });
+
+                // Создаем несколько частиц дыма при клике
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const time = performance.now();
+                        lastSmokeTime = time - smokeInterval; // Принудительно создаем частицу
+                        updateSmoke(time);
+                    }, i * 50);
+                }
+
+                // Анимация курсора при клике
+                cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
+                setTimeout(() => {
+                    cursor.style.transform = Array.from(interactiveElements).some(el => el.contains(e.target))
+                        ? 'translate(-50%, -50%) scale(2)'
+                        : 'translate(-50%, -50%) scale(1)';
+                }, 100);
+            });
+
+            // Остальной код (анимации логотипа, кнопок, уведомлений) остается без изменений
             const logo = document.querySelector('.logo-animation');
             const buttons = document.querySelectorAll('.button-animation');
 
@@ -173,7 +561,7 @@
             function checkDisplayScale() {
                 const scale = window.devicePixelRatio || 1;
                 let recommendedScaleValue = '150%';
-                let notificationMessage = '';
+                let notificationMessage = 'Если объекты не корректно отображаются, зайдите в настройки браузера и измените масштаб с 100% на 150%. Приносим свои извинения! Команда Stellar!';
 
                 if (scale === 1.25) {
                     recommendedScaleValue = '125%';
@@ -191,6 +579,10 @@
 
                 if (scale === 1 || scale === 1.25 || scale === 1.75) {
                     notificationBanner.classList.add('visible');
+
+                    setTimeout(() => {
+                        notificationBanner.classList.remove('visible');
+                    }, 10000);
                 } else {
                     notificationBanner.classList.remove('visible');
                 }
@@ -198,37 +590,26 @@
 
             checkDisplayScale();
             window.addEventListener('resize', checkDisplayScale);
-        });
 
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'F11') {
-                event.preventDefault();
-            }
-        });
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'F11') {
+                    event.preventDefault();
+                }
+            });
 
-        function setFavicon() {
-            const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const favicon = document.querySelector('link[rel="icon"]');
+            const aside = document.querySelector('aside');
+            const main = document.querySelector('main');
 
-            if (isDarkMode) {
-                favicon.href = "{% static 'main/image/StellarLogo.png' %}";
-            } else {
-                favicon.href = "{% static 'main/image/StellarLogo2.png' %}";
-            }
-        }
+            document.addEventListener('mousemove', function(event) {
+                if (window.innerWidth <= 768 && event.clientX < 50) {
+                    aside.classList.add('visible');
+                } else if (window.innerWidth <= 768) {
+                    aside.classList.remove('visible');
+                }
+            });
 
-        document.addEventListener('DOMContentLoaded', setFavicon);
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
-
-        const aside = document.querySelector('aside');
-        const main = document.querySelector('main');
-
-        document.addEventListener('mousemove', function(event) {
-            if (window.innerWidth <= 768 && event.clientX < 50) {
-                aside.classList.add('visible');
-            } else if (window.innerWidth <= 768) {
-                aside.classList.remove('visible');
-            }
+            // Запускаем основной цикл анимации
+            requestAnimationFrame(animate);
         });
     </script>
 </body>
