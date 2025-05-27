@@ -260,7 +260,7 @@ body {
     bottom: -7%;
     left: 25%;
     transform: translateX(-50%);
-    z-index: 1;
+    z-index: 2;
     font-size: 12rem;
     color: #fff;
     transition: all 0.5s ease;
